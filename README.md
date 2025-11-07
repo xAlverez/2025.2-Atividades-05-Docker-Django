@@ -48,7 +48,7 @@ WORKDIR /app
 
 # Atualizar sistema e instalar dependências
 RUN dnf update -y && \
-    dnf install -y python3 python3-pip python3-devel gcc sqlite && \
+    dnf install -y fish python3 python3-pip python3-devel gcc sqlite && \
     dnf clean all
 
 # Instalar Django
@@ -70,7 +70,12 @@ docker build -f Dockerfile.dev -t django-dev .
 #### Passo 5: Executar container de desenvolvimento com volume mapeado
 
 ```bash
-docker run -it --rm -p 8000:8000 -v $(pwd)/app:/app django-dev /bin/bash
+docker run -it --rm -p 8000:8000 -v $(pwd):/app django-dev fish
+```
+
+**No windows, usar o Power Shell** com o comando abaixo
+```bash
+docker run -it --rm -p 8000:8000 -v ${PWD}:/app django-dev fish
 ```
 
 **Explicação dos parâmetros:**
@@ -78,7 +83,7 @@ docker run -it --rm -p 8000:8000 -v $(pwd)/app:/app django-dev /bin/bash
 - `--rm`: Remove o container ao sair
 - `-p 8000:8000`: Mapeia a porta 8000 do container para a porta 8000 do host
 - `-v $(pwd)/app:/app`: Mapeia o diretório local `app` para `/app` no container
-- `/bin/bash`: Inicia um shell bash
+- `fish`: Inicia um terminal (shell)
 
 ### Parte 3: Criar a Aplicação Django
 
